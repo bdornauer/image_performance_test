@@ -87,6 +87,7 @@ saveProfile(){
 	Sleep 200
 	Send {Enter}
 }
+
 experimentalRun(){	
 	global num_rounds
 	global status
@@ -96,7 +97,7 @@ experimentalRun(){
 		launchNightly()
 		Sleep 8000
 		startProfiler()
-		loadURL("http://192.168.178.43/", "Example HTML File")
+		loadURL("https://google.at", "Google")
 		Sleep 30
 		stopProfiler()
 		Sleep 3000
