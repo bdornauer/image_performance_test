@@ -1,2 +1,1 @@
-- Download nginx 
-- 
+- Download nginx  and use tutorial:  https://dev.to/t/nginx 
