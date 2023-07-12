@@ -1,22 +1,15 @@
-const http = require("http");
+const express = require('express');
+const path = require('path');
 
-const server = http.createServer((req, res) => {
-  const urlPath = req.url;
-  if (urlPath === "/overview") {
-    res.end('Welcome to the "overview page" of the nginX project');
-  } else if (urlPath === "/api") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(
-      JSON.stringify({
-        product_id: "xyz12u3",
-        product_name: "NginX injector",
-      })
-    );
-  } else {
-    res.end("Successfully started a server");
-  }
+const app = express();
+const port = process.env.PORT || 8080;
+
+app.use(express.static('assets'))
+
+// sendFile will go here
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-server.listen(3000, "localhost", () => {
-  console.log("Listening for request");
-});
+app.listen(port);
+console.log('Server started at http://localhost:' + port);
