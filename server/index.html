@@ -3,12 +3,20 @@
 <head>
     <script src="./node_modules/perfume.js/dist/perfume.umd.min.js"></script>
     <script>
-        perfumeResults = {};
+        perfumeResults = {
+            resourceTiming: [],
+        };
 
         const perfume = new Perfume({
+            resourceTiming: true,
+            elementTiming: true,
             analyticsTracker: (options) => {
-                perfumeResults[options.metricName] = options.data;
-            }
+                if(options.metricName === "resourceTiming"){
+                    perfumeResults[options.metricName].push(options.data);
+                }else{
+                    perfumeResults[options.metricName] = options.data;
+                }
+            },
         });
 
         function load_log() {
@@ -19,19 +27,18 @@
                 // add browser information
                 let browserName = (function (agent) {
                     switch (true) {
-                        case agent.indexOf("edge") > -1: return "MS Edge";
-                        case agent.indexOf("edg/") > -1: return "Edge ( chromium based)";
-                        case agent.indexOf("opr") > -1 && !!window.opr: return "Opera";
-                        case agent.indexOf("chrome") > -1 && !!window.chrome: return "Chrome";
-                        case agent.indexOf("trident") > -1: return "MS IE";
-                        case agent.indexOf("firefox") > -1: return "Mozilla Firefox";
-                        case agent.indexOf("safari") > -1: return "Safari";
+                        case agent.indexOf("edge") > -1: return "edge_old";
+                        case agent.indexOf("edg/") > -1: return "edge_chromium";
+                        case agent.indexOf("opr") > -1 && !!window.opr: return "opera";
+                        case agent.indexOf("chrome") > -1 && !!window.chrome: return "chrome";
+                        case agent.indexOf("firefox") > -1: return "firefox";
+                        case agent.indexOf("safari") > -1: return "safari";
                         default: return "other";
                     }
                 })(window.navigator.userAgent.toLowerCase());
 
                 perfumeResults["browser"] = browserName;
-
+                console.log(perfumeResults);
                 fetch("http://localhost:8080/performance_results", {
                     method: "POST",
                     body: JSON.stringify(perfumeResults),
@@ -41,7 +48,7 @@
                 }).then(function (response) {
                     console.log(response);
                 });
-            }, 6000);
+            }, 1000);
         };
 
 
@@ -69,7 +76,7 @@
     <img src="image_7_4032x1816.png">
     <img src="image_7_4032x1816.png">
     <img src="image_7_4032x1816.png">
-    <img src="image_7_4032x1816.png">
+    <img src="image_7_4032x1816.webp">
     Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat
     nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
     duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
