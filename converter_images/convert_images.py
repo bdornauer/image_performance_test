@@ -1,6 +1,6 @@
 from PIL import Image
 import os
-
+from tqdm import tqdm
 
 input_directory = "uncoverted"
 output_directory = "converted"
@@ -10,10 +10,11 @@ compression_level = 50
 
 
 def main():
-    # go through each image in the folder converted
-    # it to a jpg and save it in the folder unconverted
     id = 0
-    for file in os.listdir(input_directory):
+    dir = os.listdir(input_directory)
+    progress_bar = tqdm(total=len(dir))
+    
+    for file in dir:
         filename = os.path.splitext(file)[0]
         file_type = os.path.splitext(file)[1]
         id += 1
@@ -24,6 +25,7 @@ def main():
                 #     output_directory, f"{new_filname}.{desired_format.lower()}")
                 convert_image(input_path, output_directory, id,
                               desired_format, scaling_factor)
+        progress_bar.update(1)
 
 
 def convert_image(input_path, output_directory, image_id, desired_format, scaling_factor):
