@@ -3,4 +3,6 @@
 package-lock.json
 */node_modules
 server/.DS_Store
-converter_images/converted/*
+converter_images/converted/
+converter_images/1024x768/
+converter_images/unconverted/ 

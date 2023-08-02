@@ -2,11 +2,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser'); // Add this line
 const fs = require('fs');
+const cors = require('cors');
 
 
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(cors({origin:"http://192.168.1.145:8080"}))
 
 app.use(express.static(__dirname));
 app.use(express.static('assets'))
@@ -22,7 +24,7 @@ function appendDataToFile(filePath, data) {
 
 app.post('/performance_results', bodyParser.json(), (req, res) => {
     let result = req.body;
-
+    console.log(req.body)
     console.log(result);
     // Browser,FCP,TTFB,LCP,FID,PLT,fetch_time
     new_line =
@@ -38,7 +40,7 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
 
     result.resourceTiming.forEach(element => {
         if (element.initiatorType === "img") {
-            new_line_file += element.name + ',' + element.duration + '\n'
+            new_line_file += element.name + ',' + element.duration
         }
     })
 
@@ -84,4 +86,4 @@ app.get('/', function (req, res) {
 });
 
 app.listen(port);
-console.log('Server started at http://localhost:' + port);
+console.log('Server started at http://192.168.1.145:' + port);
