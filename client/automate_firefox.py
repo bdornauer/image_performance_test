@@ -1,6 +1,5 @@
 import pyautogui
-
-class ChromeAutomation:
+class FirefoxAutomation:
 
     def __init__(self):
         print("calling __init__() constructor...")
@@ -8,12 +7,22 @@ class ChromeAutomation:
     def open_browser(self):
         pyautogui.sleep(5)
         pyautogui.hotkey('win', 'r')
-        pyautogui.typewrite('chrome.exe --incognito')
+        pyautogui.typewrite('firefox.exe -private-window')
         pyautogui.press('enter')
+        pyautogui.sleep(5)
+
+    def open_inspector(self):
+        pyautogui.hotkey('ctrl', 'shift', 'i')
+        pyautogui.sleep(2)
+
+    def disable_cache(self):
+        pyautogui.click((396, 726))  # open network
+        pyautogui.sleep(2)
+        pyautogui.click((371, 762))
         pyautogui.sleep(2)
 
     def open_website(self):
-        pyautogui.click((198, 76))
+        pyautogui.click((350, 76))
         pyautogui.typewrite('http://192.168.1.145:8080/')
         pyautogui.sleep(2)
         pyautogui.press('enter')

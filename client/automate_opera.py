@@ -1,19 +1,22 @@
 import pyautogui
-
-class ChromeAutomation:
+class OperaAutomation:
 
     def __init__(self):
         print("calling __init__() constructor...")
 
     def open_browser(self):
-        pyautogui.sleep(5)
         pyautogui.hotkey('win', 'r')
-        pyautogui.typewrite('chrome.exe --incognito')
+        pyautogui.typewrite('opera.exe --incognito')
         pyautogui.press('enter')
         pyautogui.sleep(2)
 
+    def open_inspector(self):
+        pyautogui.hotkey('ctrl', 'shift', 'i')
+        pyautogui.sleep(2)
+
+
     def open_website(self):
-        pyautogui.click((198, 76))
+        pyautogui.click((326, 70))
         pyautogui.typewrite('http://192.168.1.145:8080/')
         pyautogui.sleep(2)
         pyautogui.press('enter')
