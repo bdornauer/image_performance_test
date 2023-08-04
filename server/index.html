@@ -19,20 +19,32 @@
             },
         });
 
+        function isBrave() {
+            if (window.navigator.brave != undefined) {
+                if (window.navigator.brave.isBrave.name == "isBrave") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
         function load_log() {
             setTimeout(function () {
                 let plt = window.performance.timing.domComplete - window.performance.timing.requestStart;
                 perfumeResults["PLT"] = plt;
-
                 // add browser information
                 let browserName = (function (agent) {
                     switch (true) {
-                        case agent.indexOf("edge") > -1: return "edge_old";
-                        case agent.indexOf("edg/") > -1: return "edge_chromium";
-                        case agent.indexOf("opr") > -1 && !!window.opr: return "opera";
-                        case agent.indexOf("chrome") > -1 && !!window.chrome: return "chrome";
-                        case agent.indexOf("firefox") > -1: return "firefox";
-                        case agent.indexOf("safari") > -1: return "safari";
+                        case agent.indexOf("edge") > -1: return "edge_old";break;
+                        case isBrave(): return "brave";break;
+                        case agent.indexOf("edg/") > -1: return "edge_chromium";break;
+                        case agent.indexOf("opr") > -1 && !!window.opr: return "opera";break;
+                        case agent.indexOf("chrome") > -1 && !!window.chrome: return "chrome";break;
+                        case agent.indexOf("firefox") > -1: return "firefox";break;
+                        case agent.indexOf("safari") > -1: return "safari";break;
                         default: return "other";
                     }
                 })(window.navigator.userAgent.toLowerCase());
