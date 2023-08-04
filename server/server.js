@@ -16,7 +16,7 @@ app.use(express.static('/node_modules/perfume.js/dist/'))
 app.use(bodyParser.urlencoded({extended: true})); // Add this line
 
 function appendDataToFile(filePath, data) {
-    fs.appendFile(filePath, data + '\n', function (err) {
+    fs.appendFile(filePath, data, function (err) {
         if (err) throw err;
         console.log('Data appended to file');
     });
@@ -26,21 +26,21 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
     let result = req.body;
     console.log(req.body)
     console.log(result);
-    // Browser,FCP,TTFB,LCP,FID,PLT,fetch_time
+    // Browser,FCP,TTFB,PLT,fetch_time
     new_line =
         result.browser + ',' +
         result.FCP + ',' +
         result.TTFB + ',' +
-        result.LCP + ',' +
-        result.FID + ',' +
+        //result.LCP + ',' +
+        //result.FID + ',' +
         result.PLT + ',' +
-        result.navigationTiming.fetchTime;
+        result.navigationTiming.fetchTime+ "\n";
 
     new_line_file = ""
 
     result.resourceTiming.forEach(element => {
         if (element.initiatorType === "img") {
-            new_line_file += element.name + ',' + element.duration
+            new_line_file += element.name + ',' + element.duration +"\n"
         }
     })
 
@@ -71,6 +71,9 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
             appendDataToFile('./results/edge_chrome.csv', new_line);
             appendDataToFile('./results/edge_chrome_resources.csv', new_line_file);
             break;
+        case 'brave':
+            appendDataToFile('./results/brave.csv', new_line);
+            appendDataToFile('./results/brave_resources.csv', new_line_file);
         default:
             appendDataToFile('./results/other.csv', new_line);
             appendDataToFile('./results/other_resources.csv', new_line_file);
