@@ -1,5 +1,5 @@
 import pyautogui
-class FirefoxAutomation:
+class EdgeAutomation:
 
     def __init__(self):
         print("calling __init__() constructor...")
@@ -7,19 +7,9 @@ class FirefoxAutomation:
     def open_browser(self):
         pyautogui.sleep(5)
         pyautogui.hotkey('win', 'r')
-        pyautogui.typewrite('firefox.exe -private-window')
+        pyautogui.typewrite('msedge.exe --inprivate')
         pyautogui.press('enter')
         pyautogui.sleep(5)
-
-    def open_inspector(self):
-        pyautogui.hotkey('ctrl', 'shift', 'i')
-        pyautogui.sleep(2)
-
-    def disable_cache(self):
-        pyautogui.click((396, 726))  # open network
-        pyautogui.sleep(2)
-        pyautogui.click((371, 762))
-        pyautogui.sleep(2)
 
     def open_website(self):
         pyautogui.click((350, 76))
