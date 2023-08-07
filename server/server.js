@@ -104,7 +104,6 @@ app.get("/mix", function (req, res) {
 
 app.post("/change_image_format",bodyParser.json(), function (req, res) {
     standard_image_format = req.body.image_format;
-    console.log(standard_image_format);
     const spawn = require('child_process').spawn;
     const ls = spawn('python3', ['change_image_format.py', standard_image_format]);
 
