@@ -10,6 +10,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 let standard_image_format = "png"
+let image_run_id = 0
 
 app.use(cors({origin:"http://192.168.1.145:8080"}))
 app.use(express.static(__dirname));
@@ -20,7 +21,6 @@ app.use(bodyParser.urlencoded({extended: true})); // Add this line
 function appendDataToFile(filePath, data) {
     fs.appendFile(filePath, data, function (err) {
         if (err) throw err;
-        console.log('Saved!')
     });
 }
 
@@ -28,7 +28,9 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
     let result = req.body;
 
     new_line =
+        image_run_id + ',' +
         result.browser + ',' +
+        standard_image_format + ',' +
         result.FCP + ',' +
         result.TTFB + ',' +
         //result.LCP + ',' +
@@ -37,10 +39,9 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
         result.navigationTiming.fetchTime+ "\n";
 
     new_line_file = ""
-
     result.resourceTiming.forEach(element => {
         if (element.initiatorType === "img") {
-            new_line_file += element.name + ',' + element.duration +"\n"
+            new_line_file += image_run_id + "," + element.name + ',' + element.duration +"\n"
         }
     })
 
@@ -81,7 +82,8 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
     }
 
     console.log("Results logged from: " + result.browser );
-
+    console.log("Image run id: " + image_run_id);
+    image_run_id += 1
     res.send('POST request to the homepage');
 });
 
@@ -91,6 +93,7 @@ app.get('/', function (req, res) {
 });
 
 app.get("/mix", function (req, res) {
+    console.log("mixing images");
     const spawn = require('child_process').spawn;
     const ls = spawn('python3', ['randomize_images.py']);
     //print output of randomize_images.py
@@ -103,6 +106,8 @@ app.get("/mix", function (req, res) {
 
 
 app.post("/change_image_format",bodyParser.json(), function (req, res) {
+    console.log("changed image format to: " + req.body.image_format);
+
     standard_image_format = req.body.image_format;
     const spawn = require('child_process').spawn;
     const ls = spawn('python3', ['change_image_format.py', standard_image_format]);
