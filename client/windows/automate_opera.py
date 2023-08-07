@@ -10,11 +10,6 @@ class OperaAutomation:
         pyautogui.press('enter')
         pyautogui.sleep(2)
 
-    def open_inspector(self):
-        pyautogui.hotkey('ctrl', 'shift', 'i')
-        pyautogui.sleep(2)
-
-
     def open_website(self):
         pyautogui.click((326, 70))
         pyautogui.typewrite('http://192.168.1.145:8080/')
