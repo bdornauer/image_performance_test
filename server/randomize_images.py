@@ -37,16 +37,19 @@ def randomize_images(image_format):
 
 def replace_tag_with_image_tag(size, data, image_number, image_format):
     image_to_replace = f"<!-- Image {image_number} -->"
-    random_image_selected = select_random_image(size[0], size[1], image_format)
-    replace_text = create_image_file_tag(size[0], size[1], random_image_selected, "A short descrition of the image")
+    random_image_selected = select_random_image(size[0], size[1])
+    random_image_selected_with_format = random_image_selected + image_format.lower()
+    replace_text = create_image_file_tag(size[0], size[1], random_image_selected_with_format, "A short descrition of the image")
     data = data.replace(image_to_replace, replace_text)
     return data
 
 
-def select_random_image(width, height, image_format):
-    image_name = f"image_{random.randint(1, 1000)}_{width}x{height}.{image_format.lower()}"
-    #copy images from folder converted to assets folder
-    os.system(f"cp converted/{image_name} assets/images/{image_name}")
+def select_random_image(width, height):
+    random_int = random.randint(1, 1000)
+    image_name = f"image_{random_int}_{width}x{height}."
+    for image_format in image_formats:
+        image_name_with_format = image_name + image_format.lower()
+        os.system(f"cp converted/{image_name_with_format} assets/images/{image_name_with_format}")
     return image_name
 
 
@@ -54,7 +57,13 @@ def create_image_file_tag(width, height, image_name, alt_text):
     image_file_tag = f'<img src="/assets/images/{image_name}" alt="{alt_text}" width="{width}" height="{height}">'
     return image_file_tag
 
+def change_current_format_file(standard_image_format):
+    file_image_format= open("current_format.txt", "w")
+    file_image_format.write(standard_image_format)
+    file_image_format.close()
 
 if __name__ == '__main__':
-    randomize_images("PNG")
+    standard_image_format = "png"
+    randomize_images(standard_image_format)
+    change_current_format_file(standard_image_format)
     print("Done")

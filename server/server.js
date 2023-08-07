@@ -9,13 +9,13 @@ const {spawn} = require("child_process");
 const app = express();
 const port = process.env.PORT || 8080;
 
+let standard_image_format = "png"
+
 app.use(cors({origin:"http://192.168.1.145:8080"}))
 app.use(express.static(__dirname));
 app.use(express.static('assets'))
 app.use(express.static('/node_modules/perfume.js/dist/'))
 app.use(bodyParser.urlencoded({extended: true})); // Add this line
-
-let counter = 0; // change for number of browser you are using (e.g Mac with Safari or not )
 
 function appendDataToFile(filePath, data) {
     fs.appendFile(filePath, data, function (err) {
@@ -81,15 +81,6 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
     }
 
     console.log("Results logged from: " + result.browser );
-    console.log("Counter < 5 change images: " + counter);
-
-    counter += 1;
-    console.log(counter)
-
-    if(counter === 5){
-        const spawn = require('child_process').spawn;
-        const ls = spawn('python', ['script.py', 'arg1', 'arg2']);
-    }
 
     res.send('POST request to the homepage');
 });
@@ -107,8 +98,22 @@ app.get("/mix", function (req, res) {
         console.log(`stdout: ${data}`);
     });
 
-    res.send('Proceeded');
+    res.send('Proceeded mix');
 });
+
+
+app.post("/change_image_format",bodyParser.json(), function (req, res) {
+    standard_image_format = req.body.image_format;
+    console.log(standard_image_format);
+    const spawn = require('child_process').spawn;
+    const ls = spawn('python3', ['change_image_format.py', standard_image_format]);
+
+    ls.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+
+    res.send('Proceeded change format');
+})
 
 app.listen(port);
 console.log('Server started at http://192.168.1.145:' + port);
