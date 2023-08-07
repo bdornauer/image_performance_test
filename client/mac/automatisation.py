@@ -16,8 +16,8 @@ if __name__ == '__main__':
     for i in range(0, 1):
         print("iteration: ", i)
         #opera_controller.complet_run()
-        #chrome_controller.complet_run()
+        chrome_controller.complet_run()
         #firefox_controller.complet_run()
         #edge_controller.complet_run()
         #brave_controller.complet_run()
-        safari_controller.complet_run()
+        #safari_controller.complet_run()
