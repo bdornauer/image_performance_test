@@ -3,30 +3,30 @@ const path = require('path');
 const bodyParser = require('body-parser'); // Add this line
 const fs = require('fs');
 const cors = require('cors');
+const {spawn} = require("child_process");
 
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors({origin:"http://192.168.1.145:8080"}))
-
 app.use(express.static(__dirname));
 app.use(express.static('assets'))
 app.use(express.static('/node_modules/perfume.js/dist/'))
 app.use(bodyParser.urlencoded({extended: true})); // Add this line
 
+let counter = 0; // change for number of browser you are using (e.g Mac with Safari or not )
+
 function appendDataToFile(filePath, data) {
     fs.appendFile(filePath, data, function (err) {
         if (err) throw err;
-        console.log('Data appended to file');
+        console.log('Saved!')
     });
 }
 
 app.post('/performance_results', bodyParser.json(), (req, res) => {
     let result = req.body;
-    console.log(req.body)
-    console.log(result);
-    // Browser,FCP,TTFB,PLT,fetch_time
+
     new_line =
         result.browser + ',' +
         result.FCP + ',' +
@@ -80,12 +80,34 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
             break;
     }
 
+    console.log("Results logged from: " + result.browser );
+    console.log("Counter < 5 change images: " + counter);
+
+    counter += 1;
+    console.log(counter)
+
+    if(counter === 5){
+        const spawn = require('child_process').spawn;
+        const ls = spawn('python', ['script.py', 'arg1', 'arg2']);
+    }
+
     res.send('POST request to the homepage');
 });
 
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/index.html'));
+});
+
+app.get("/mix", function (req, res) {
+    const spawn = require('child_process').spawn;
+    const ls = spawn('python3', ['randomize_images.py']);
+    //print output of randomize_images.py
+    ls.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+
+    res.send('Proceeded');
 });
 
 app.listen(port);
