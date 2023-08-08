@@ -75,6 +75,7 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
         case 'brave':
             appendDataToFile('./results/brave.csv', new_line);
             appendDataToFile('./results/brave_resources.csv', new_line_file);
+            break;
         default:
             appendDataToFile('./results/other.csv', new_line);
             appendDataToFile('./results/other_resources.csv', new_line_file);
