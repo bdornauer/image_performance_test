@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 let standard_image_format = "png"
-let image_run_id = 0
+let image_run_id = 2371
 
 app.use(cors({origin:"http://192.168.1.145:8080"}))
 app.use(express.static(__dirname));
