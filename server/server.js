@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 let standard_image_format = "png"
-let image_run_id = 2371
+let image_run_id = 0
 
 app.use(cors({origin:"http://192.168.1.145:8080"}))
 app.use(express.static(__dirname));
@@ -31,10 +31,9 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
         image_run_id + ',' +
         result.browser + ',' +
         standard_image_format + ',' +
+        result.FP + ',' +
         result.FCP + ',' +
         result.TTFB + ',' +
-        //result.LCP + ',' +
-        //result.FID + ',' +
         result.PLT + ',' +
         result.navigationTiming.fetchTime+ "\n";
 
@@ -71,10 +70,6 @@ app.post('/performance_results', bodyParser.json(), (req, res) => {
         case 'edge_chromium':
             appendDataToFile('./results/edge_chrome.csv', new_line);
             appendDataToFile('./results/edge_chrome_resources.csv', new_line_file);
-            break;
-        case 'brave':
-            appendDataToFile('./results/brave.csv', new_line);
-            appendDataToFile('./results/brave_resources.csv', new_line_file);
             break;
         default:
             appendDataToFile('./results/other.csv', new_line);
