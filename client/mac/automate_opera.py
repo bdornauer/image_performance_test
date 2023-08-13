@@ -18,17 +18,17 @@ class OperaAutomation:
         keyboard.write('open -na "Opera" --args --incognito')
         pyautogui.sleep(1)
         pyautogui.press('enter')
-        pyautogui.sleep(10)
+        pyautogui.sleep(5)
 
     def open_website(self):
         keyboard.write('http://192.168.1.145:8080/')
         pyautogui.sleep(2)
         pyautogui.press('enter')
-        pyautogui.sleep(10)
+        pyautogui.sleep(7)
 
     def close_browser(self):
         pyautogui.hotkey('command', 'w')
-        pyautogui.sleep(10)
+        pyautogui.sleep(5)
 
     def complet_run(self):
         self.open_browser()
