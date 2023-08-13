@@ -16,4 +16,4 @@ def random_image_selection(source, dest, number):
 
 
 if __name__ == "__main__":
-    random_image_selection("./1024x768", "./unconverted", 1000)
+    random_image_selection("./1024x768", "./unconverted_uncoverted", 1000)
