@@ -45,7 +45,7 @@ def replace_tag_with_image_tag(size, data, image_number, image_format):
 
 
 def select_random_image(width, height):
-    random_int = random.randint(1, 625)
+    random_int = random.randint(1, 1000)
     image_name = f"image_{random_int}_{width}x{height}."
     for image_format in image_formats:
         image_name_with_format = image_name + image_format.lower()
