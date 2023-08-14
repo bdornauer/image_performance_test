@@ -18,7 +18,7 @@ class FirefoxAutomation:
         keyboard.write('open -na "Firefox" --args --private-window')
         pyautogui.sleep(1)
         pyautogui.press('enter')
-        pyautogui.sleep(10)
+        pyautogui.sleep(5)
 
     def open_website(self):
         keyboard.write('http://192.168.1.145:8080/')
