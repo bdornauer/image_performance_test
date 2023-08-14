@@ -8,3 +8,8 @@ converter_images/1024x768/
 server/assets/images
 server/converted
 .DS_Store
+client/__pycache__/automate_brave.cpython-311.pyc
+client/__pycache__/automate_chrome.cpython-311.pyc
+client/__pycache__/automate_edge.cpython-311.pyc
+client/__pycache__/automate_firefox.cpython-311.pyc
+client/__pycache__/automate_opera.cpython-311.pyc
