@@ -7,3 +7,4 @@ converter_images/converted/
 converter_images/1024x768/
 server/assets/images
 server/converted
+.DS_Store
