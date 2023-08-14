@@ -27,6 +27,8 @@ if __name__ == '__main__':
     image_formats = ["png", "jpeg",  "avif", "webp"]
 
     for i in  range(0, 200):
+        mix_images_backend()
+        time.sleep(5)
         for image_format in image_formats:
             change_format_background(image_format)
             time.sleep(5)
@@ -35,5 +37,4 @@ if __name__ == '__main__':
             firefox_controller.complet_run()
             edge_controller.complet_run()
             safari_controller.complet_run()
-        mix_images_backend()
-        time.sleep(5)
+

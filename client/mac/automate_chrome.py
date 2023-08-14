@@ -25,7 +25,7 @@ class ChromeAutomation:
         keyboard.write('http://192.168.1.145:8080/')
         pyautogui.sleep(2)
         pyautogui.press('enter')
-        pyautogui.sleep(7)
+        pyautogui.sleep(10)
 
 
     def close_browser(self):
