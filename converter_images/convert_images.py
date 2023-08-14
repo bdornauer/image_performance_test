@@ -9,6 +9,7 @@ set_of_formats = ["PNG", "JPEG", "WEBP", "TIFF", "AVIF"]
 image_width_height = [[1280, 720], [640, 360], [320, 180], [320, 180], [300, 225], [300, 225], [240, 180], [240, 180],
                       [240, 180], [1, 1], [32, 32], [64, 64], [150, 150], [150, 150], [200, 200], [225, 300],
                       [180, 240]]  # [width, height]
+compression_level = 50
 
 
 def main():
@@ -34,7 +35,9 @@ def convert_image(input_path, output_directory, image_id, desired_format, width,
     image = image.resize((width, height))
     output_directory = os.path.join(
         output_directory, f"image_{image_id}_{width}x{height}.{desired_format.lower()}")
-    image.save(output_directory, format=desired_format)
+    image.save(output_directory, format=desired_format,
+               quality=compression_level)
+
 
 if __name__ == "__main__":
     main()

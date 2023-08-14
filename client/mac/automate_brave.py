@@ -1,12 +1,9 @@
 import pyautogui
 import keyboard
 
-class SafariAutomation:
-
+class BraveAutomation:
     def __init__(self):
         print("calling __init__() constructor...")
-
-        self.applescript = ''' osascript -e 'tell application "Safari" to activate' -e 'tell application "System Events" to keystroke "n" using {command down, shift down}' '''
 
     def open_browser(self):
         pyautogui.sleep(2)
@@ -17,8 +14,7 @@ class SafariAutomation:
         pyautogui.sleep(1)
         pyautogui.press('enter')
         pyautogui.sleep(1)
-        #open safari in private mode
-        keyboard.write(self.applescript)
+        keyboard.write('open -na "Brave Browser" --args --incognito')
         pyautogui.sleep(1)
         pyautogui.press('enter')
         pyautogui.sleep(10)

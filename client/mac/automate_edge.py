@@ -14,7 +14,7 @@ class EdgeAutomation:
         keyboard.write('open -na "Microsoft Edge" --args --inprivate')
         pyautogui.sleep(1)
         pyautogui.press('enter')
-        pyautogui.sleep(5)
+        pyautogui.sleep(10)
 
     def open_website(self):
         keyboard.write('http://192.168.1.145:8080/')
